@@ -9,6 +9,7 @@ class CreateSuppliers < ActiveRecord::Migration
       t.column :zip, :string
       t.column :phone, :string
       t.column :fax, :string
+      t.column :email, :string
     end
   end
 
