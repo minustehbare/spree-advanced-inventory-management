@@ -1,3 +1,3 @@
 class SupplierChannel < ActiveRecord::Base
-  belongs_to :supplier, :product
+  belongs_to :supplier, :variant
 end

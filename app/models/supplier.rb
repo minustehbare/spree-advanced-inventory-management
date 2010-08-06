@@ -1,3 +1,3 @@
 class Supplier < ActiveRecord::Base
-  has_many :supplier_channels, :products
+  has_many :supplier_channels
 end
