@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+one:
+  id: 1
+  purchase_order_id: 1
+  product_id: 1
+  qty: 1
+  cost_paid: 9.99
+two:
+  id: 2
+  purchase_order_id: 1
+  product_id: 1
+  qty: 1
+  cost_paid: 9.99
