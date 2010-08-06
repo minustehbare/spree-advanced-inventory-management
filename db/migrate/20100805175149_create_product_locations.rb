@@ -2,9 +2,8 @@ class CreateProductLocations < ActiveRecord::Migration
   def self.up
     create_table :product_locations do |t|
       t.column :warehouse_id, :integer
-      t.column :aisle, :string
-      t.column :row, :string
-      t.column :bin, :string
+      t.column :name, :string
+      t.column :parent_id, :integer
     end
   end
 
