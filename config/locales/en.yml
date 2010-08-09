@@ -1,2 +1,9 @@
 en:
   purchase_orders: "Purchase Orders"
+  suppliers: "Suppliers"
+  listing_suppliers: "Listing Suppliers"
+  new_supplier: "New Supplier"
+  address1: "Address 1"
+  address2: "Address 2"
+  fax: "Fax"
+  all_suppliers: "View all Suppliers"
