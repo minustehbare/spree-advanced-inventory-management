@@ -1,0 +1,19 @@
+<div class="yui-gb">
+
+  <div class="yui-u first">    <fieldset>
+    <%- locals = {:f => f} -%>
+    <% hook :admin_purchase_orders_form_left, locals do %>
+      <%- f.field_container :supplier_id do -%>
+        <%= f.label :supplier_id, t("name") %> <span class="required">*</span><br />
+        <%= f.select :supplier_id, @suppliers,{}, :class => 'fullwidth dropdown'  %>
+        <%= f.error_message_on :supplier_id %>
+      <%- end -%>
+    <% end %>
+    </fieldset>
+  </div>
+  
+    <div class="yui-u"></div>
+    <div class="yui-u"></div>
+
+
+</div>

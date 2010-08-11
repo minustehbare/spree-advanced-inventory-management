@@ -26,7 +26,7 @@
       <% end %>
       <td>
         <% hook :admin_suppliers_index_row_actions, locals do %>
-          <%= link_to_edit supplier %>
+          <%= link_to_edit supplier %>           <%= link_to_delete supplier %>
         <% end %>
       </td>
     </tr>

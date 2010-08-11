@@ -5,6 +5,7 @@ class CreatePurchaseLineItems < ActiveRecord::Migration
       t.column :variant_id, :integer
       t.column :qty, :integer
       t.column :cost, :decimal, :precision => 8, :scale => 2, :null => false
+      t.timestamps
     end
   end
 

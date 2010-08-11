@@ -5,6 +5,7 @@ class CreateSupplierChannels < ActiveRecord::Migration
       t.column :supplier_id, :integer
       t.column :cost, :decimal, :precision => 8, :scale => 2, :null => false
       t.column :supplier_sku, :string
+      t.timestamps
     end
   end
 

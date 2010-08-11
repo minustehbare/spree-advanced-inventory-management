@@ -1,12 +1,7 @@
 <h1>Editing supplier</h1>
 
-<% form_for(@supplier) do |f| %>
-  <%= f.error_messages %>
+<% form_for(:supplier,  :url => object_url, :html => { :method => :put }) do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+  <%= render :partial => 'admin/shared/edit_resource_links' %>
 
-  <p>
-    <%= f.submit 'Update' %>
-  </p>
 <% end %>
-
-<%= link_to 'Show', @supplier %> |
-<%= link_to 'Back', suppliers_path %>

@@ -4,6 +4,7 @@ class CreateProductLocations < ActiveRecord::Migration
       t.column :warehouse_id, :integer
       t.column :name, :string
       t.column :parent_id, :integer
+      t.timestamps
     end
   end
 

@@ -1,5 +1,6 @@
 en:
   purchase_orders: "Purchase Orders"
+  purchase_order: "Purchase Order"
   suppliers: "Suppliers"
   listing_suppliers: "Listing Suppliers"
   new_supplier: "New Supplier"
@@ -7,3 +8,7 @@ en:
   address2: "Address 2"
   fax: "Fax"
   all_suppliers: "View all Suppliers"
+  created_date_range: "Created Between"
+  sent_date_range: "Sent Between"
+  received_date_range: "Received Between"
+  supplier_address_title: "Supplier Address"
