@@ -2,11 +2,12 @@ class Admin::PurchaseOrdersController < Admin::BaseController
   resource_controller
     
   before_filter :load_data, :only => [:new, :edit, :create, :update]
-
-  new_action.response do |wants|
-    wants.html {render :action => :new, :layout => false}
-  end
   
+  
+  def new
+    @purchase_order = PurchaseOrder.create
+  end
+
   edit.after do
     flash[:error] = "Cannot re-assign Supplier. Delete purchase order and start over."
   end
@@ -22,8 +23,6 @@ class Admin::PurchaseOrdersController < Admin::BaseController
   end
 
   def collection
-#    @search = end_of_association_chain
-#    @collection = @search.find(:all, :include => [:purchase_line_items, :supplier])
     @search = PurchaseOrder.searchlogic(params[:search])
     @search.order ||= "descend_by_created_at"
 

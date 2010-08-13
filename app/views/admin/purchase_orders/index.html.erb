@@ -1,16 +1,9 @@
 <%= render :partial => 'admin/shared/purchase_order_sub_menu' %>
+<div class='toolbar order-links'>
+  <%= button_link_to t("new_porder"), new_admin_purchase_order_url, :icon => 'add' %>
+</div>
 
-  <br/>
-  <p id="new_object_link">
-      <%= link_to_remote icon('add') + ' ' + t("new") + " " + t("purchase_order"), 
-                         {:url => new_admin_purchase_order_url, 
-                         :method => :get,
-                         :update => "new-object",
-                         :before => "jQuery('#new_object_link').hide(); ", 
-                         :complete => ""}, :class => 'iconlink' %>
-  </p>
-  
-<div id="new-object"></div>
+<h1><%= t("listing_porders") %></h1>
 
 <table class="index">
 	<tr>
@@ -24,7 +17,7 @@
 	<% @collection.each do |purchase_order| -%>
       <tr id="<%= dom_id(purchase_order) %>" >
       	<td><%= link_to purchase_order.number, object_url(purchase_order) %></td>
-      	<td><%= purchase_order.supplier.name  -%></td>
+      	<td><%= purchase_order.supplier.name rescue '-'  -%></td>
       	<td><%= purchase_order.state  -%></td>
       	<td><%= "$%.2f" % purchase_order.total -%></td>
         <td><%= link_to_edit(purchase_order) %> <%= link_to_delete(purchase_order) %></td>

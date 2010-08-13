@@ -12,3 +12,5 @@ en:
   sent_date_range: "Sent Between"
   received_date_range: "Received Between"
   supplier_address_title: "Supplier Address"
+  new_porder: "New Purchase Order"
+  listing_porders: "Listing Purchase Orders"

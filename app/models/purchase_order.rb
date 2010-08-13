@@ -4,27 +4,38 @@ class PurchaseOrder < ActiveRecord::Base
 
   belongs_to :supplier
   has_many :purchase_line_items
+  make_permalink :field => :number
+  
+  accepts_nested_attributes_for :purchase_line_items
 
   def contains?(product)
     purchase_line_items.select { |purchase_line_item| purchase_line_item.product == product }.first
   end
 
-  def add_product(product, attrs = {})
-    unless attrs[:quantity] and attrs[:cost] and attrs[:supplier_sku]
-      supplier_channel = SupplierChannel.find_by_supplier_id_and_product_id(supplier_id, product.id)
-      attrs[:quantity] ||= 1
-      attrs[:cost] ||= supplier_channel.cost
-      attrs[:supplier_sku] ||= supplier_channel.supplier_sku
-    end
-    current_item = contains?(product)
+  def add_variant(variant, quantity=1)
+    current_item = contains?(variant)
     if current_item
-      current_item.increment_quantity unless attrs[:quantity] > 1
-      current_item.quantity = (current_item.quantity + attrs[:quantity]) if attrs[:quantity] > 1
+      current_item.increment_quantity unless quantity > 1
+      current_item.quantity = (current_item.quantity + quantity) if quantity > 1
       current_item.save
     else
-      current_item = PurchaseLineItem.new(attrs)
-      current_item.product = product
+      current_item = PurchaseLineItem.new(:qty => quantity)
+      current_item.variant = variant
+      current_item.cost   = variant.price
       self.purchase_line_items << current_item
+    end
+
+    # populate line_items attributes for additional_fields entries
+    # that have populate => [:line_item]
+    Variant.additional_fields.select{|f| !f[:populate].nil? && f[:populate].include?(:line_item) }.each do |field|
+      value = ""
+
+      if field[:only].nil? || field[:only].include?(:variant)
+        value = variant.send(field[:name].gsub(" ", "_").downcase)
+      elsif field[:only].include?(:product)
+        value = variant.product.send(field[:name].gsub(" ", "_").downcase)
+      end
+      current_item.update_attribute(field[:name].gsub(" ", "_").downcase, value)
     end
 
     current_item
