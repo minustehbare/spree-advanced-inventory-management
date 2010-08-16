@@ -5,18 +5,28 @@ class AdvancedInventoryManagementExtension < Spree::Extension
   version "1.0"
   description "Describe your extension here"
   url "http://yourwebsite.com/advanced_inventory_management"
-
-  # Please use advanced_inventory_management/config/routes.rb instead for extension routes.
-
-  # def self.require_gems(config)
-  #   config.gem "gemname-goes-here", :version => '1.2.3'
-  # end
   
   def activate
 
-    # make your helper avaliable in all views
-    # Spree::BaseController.class_eval do
-    #   helper YourHelper
-    # end
+    Admin::ProductsController.class_eval do
+      def products_by_supplier
+
+        includes = [{:variants => :images}, :master, :images]
+        @collection = Product.name_contains(params[:q]).master_supplier_channels_supplier_id_eq(params[:supplier_id]).all(:include => includes, :limit => 10)
+                
+        respond_to do |wants|
+          wants.json {
+            render :json => @collection.to_json(:include => {:master => {}, :variants => {:include => {:images => {}}}, :images => {}})
+            }
+        end
+      end
+    end
+    
+    Variant.class_eval do
+    
+      has_many :supplier_channels  
+      
+    end
+ 
   end
 end

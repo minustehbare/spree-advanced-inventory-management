@@ -1,5 +1,14 @@
 <%= render :partial => 'admin/shared/purchase_order_tabs', :locals => {:current => "Purchase Order Details"} %>
 
+<div class="adr">
+  <h4>
+    <%= t(:supplier_address_title) %>
+  </h4>
+    <%= render :partial => 'admin/shared/supplier_details', :locals => {:supplier => @purchase_order.supplier} %>   
+</div>
+
+<div style="clear:both;"></div>
+
 <%= render :partial => "add_product" %>
 
 <% hook :admin_order_edit_header do %>
@@ -8,12 +17,12 @@
 
 <% hook :admin_order_edit_form do %>
   <div id="order-form-wrapper">
-    <%= render :partial => 'po_form', :locals => {:purchase_order => @purchase_order} -%>
+    <%= render :partial => 'form', :locals => {:purchase_order => @purchase_order} -%>
   </div>
 <% end %>
 
 <% content_for :head do %>
-  <%= javascript_tag "var expand_variants = true;" %>
-  <%= javascript_include_tag 'admin/orders/edit.js' %>
+  <%= javascript_tag "var expand_variants = true; var supplier_id = " + @purchase_order.supplier_id.to_s -%>
+  <%= javascript_include_tag 'admin/purchase_orders/edit.js' -%>
   <%= stylesheet_link_tag 'admin/edit_orders.css' %>
 <% end %>

@@ -13,7 +13,7 @@ class Admin::PurchaseOrdersController < Admin::BaseController
   end
   
   create.response do |wants|
-    wants.html { redirect_to collection_url }
+    wants.html { redirect_to '/admin/purchase_orders/' + @purchase_order.number + '/edit' }
   end
 
   private
