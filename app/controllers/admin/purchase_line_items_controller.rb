@@ -43,26 +43,12 @@ class Admin::PurchaseLineItemsController < Admin::BaseController
   update.success.wants.html { render :partial => "admin/purchase_orders/form", :locals => {:order => @purchase_order}, :layout => false}
   update.failure.wants.html { render :partial => "admin/purchase_orders/form", :locals => {:order => @purchase_order}, :layout => false}
 
-  #destroy.after :recalulate_totals
-  #update.after :recalulate_totals
-  #create.after :recalulate_totals
+  destroy.after :recalulate_totals
+  update.after :recalulate_totals
+  create.after :recalulate_totals
 
   private
   def recalulate_totals
-    unless @purchase_order.shipping_method.nil?
-      @purchase_order.shipping_charges.each do |shipping_charge|
-        shipping_charge.update_attributes(:amount => @purchase_order.shipping_method.calculate_cost(@purchase_order.shipment))
-      end
-    end
-
-    @purchase_order.tax_charges.each do |tax_charge|
-      tax_charge.update_attributes(:amount => tax_charge.calculate_tax_charge)
-    end
-
-    @purchase_order.update_totals!
-
-    unless @purchase_order.in_progress?
-      InventoryUnit.adjust_units(@purchase_order)
-    end
+    @purchase_order.set_total
   end
 end

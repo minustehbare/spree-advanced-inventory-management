@@ -1,6 +1,6 @@
 class PurchaseOrder < ActiveRecord::Base
 
-  before_create :generate_order_number, :set_state, :set_total
+  before_create :generate_order_number, :set_state
 
   belongs_to :supplier
   has_many :purchase_line_items
@@ -42,13 +42,13 @@ class PurchaseOrder < ActiveRecord::Base
   end
   
   def set_total
-    self.total = purchase_line_items.collect {|x| x.cost}.sum || 0
+    self.total = purchase_line_items.collect {|x| x.cost * x.qty}.sum || 0
   end
 
   def set_state
     self.state = 'in_progress'
   end
-  
+   
   def to_param
     self.number if self.number
     generate_order_number unless self.number

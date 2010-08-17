@@ -3,7 +3,6 @@ class Admin::PurchaseOrdersController < Admin::BaseController
     
   before_filter :load_data, :only => [:new, :edit, :create, :update]
   
-  
   def new
     @purchase_order = PurchaseOrder.create
   end
@@ -15,7 +14,12 @@ class Admin::PurchaseOrdersController < Admin::BaseController
   create.response do |wants|
     wants.html { redirect_to '/admin/purchase_orders/' + @purchase_order.number + '/edit' }
   end
-
+  
+  def show
+    @purchase_order = PurchaseOrder.find(params[:id])
+    @purchase_order.get_total
+  end
+  
   private
 
   def load_data
