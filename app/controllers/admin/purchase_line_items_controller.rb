@@ -15,7 +15,7 @@ class Admin::PurchaseLineItemsController < Admin::BaseController
 
     before :create
 
-    @purchase_order.add_variant(variant, params[:line_item][:quantity].to_i)
+    @purchase_order.add_variant(variant, params[:line_item][:qty].to_i)
 
     if @purchase_order.save
       after :create
@@ -29,19 +29,19 @@ class Admin::PurchaseLineItemsController < Admin::BaseController
 
   end
 
-  destroy.success.wants.html { render :partial => "admin/purchase_orders/form", :locals => {:order => @purchase_order}, :layout => false }
-  destroy.failure.wants.html { render :partial => "admin/purchase_orders/form", :locals => {:order => @purchase_order}, :layout => false }
+  destroy.success.wants.html { render :partial => "admin/purchase_orders/form", :locals => {:purchase_order => @purchase_order}, :layout => false }
+  destroy.failure.wants.html { render :partial => "admin/purchase_orders/form", :locals => {:purchase_order => @purchase_order}, :layout => false }
 
   new_action.response do |wants|
     wants.html {render :action => :new, :layout => false}
   end
 
   create.response do |wants|
-    wants.html { render :partial => "admin/purchase_orders/form", :locals => {:order => @purchase_order}, :layout => false}
+    wants.html { render :partial => "admin/purchase_orders/form", :locals => {:purchase_order => @purchase_order}, :layout => false}
   end
 
-  update.success.wants.html { render :partial => "admin/purchase_orders/form", :locals => {:order => @purchase_order}, :layout => false}
-  update.failure.wants.html { render :partial => "admin/purchase_orders/form", :locals => {:order => @purchase_order}, :layout => false}
+  update.success.wants.html { render :partial => "admin/purchase_orders/form", :locals => {:purchase_order => @purchase_order}, :layout => false}
+  update.failure.wants.html { render :partial => "admin/purchase_orders/form", :locals => {:purchase_order => @purchase_order}, :layout => false}
 
   destroy.after :recalulate_totals
   update.after :recalulate_totals
@@ -49,6 +49,7 @@ class Admin::PurchaseLineItemsController < Admin::BaseController
 
   private
   def recalulate_totals
-    @purchase_order.set_total
+    @purchase_order.update_totals
+    @purchase_order.save
   end
 end

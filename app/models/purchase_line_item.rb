@@ -5,14 +5,14 @@ class PurchaseLineItem < ActiveRecord::Base
 
   has_one :product, :through => :variant
 
-  before_validation :copy_price
+  #before_validation :copy_price
   before_destroy :ensure_not_shipped
 
   validates_presence_of :variant, :purchase_order
   validates_numericality_of :qty, :only_integer => true, :message => I18n.t("validation.must_be_int")
   validates_numericality_of :cost
 
-  attr_accessible :qty, :variant_id, :purchase_order_id
+  #attr_accessible :qty, :variant_id, :purchase_order_id
 
   def copy_price
     self.cost = variant.price if variant && self.cost.nil?
@@ -47,10 +47,10 @@ class PurchaseLineItem < ActiveRecord::Base
 
   private
   def ensure_not_shipped
-    if shipped_count = purchase_order.shipped_units.nil? ? nil : purchase_order.shipped_units[variant]
-      errors.add_to_base I18n.t("cannot_destory_line_item_as_inventory_units_have_shipped")
-      return false
-    end
+#    if shipped_count = purchase_order.shipped_units.nil? ? nil : purchase_order.shipped_units[variant]
+#      errors.add_to_base I18n.t("cannot_destory_line_item_as_inventory_units_have_shipped")
+#      return false
+#    end
   end
 end
 

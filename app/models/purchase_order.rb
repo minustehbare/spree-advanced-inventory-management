@@ -1,12 +1,28 @@
 class PurchaseOrder < ActiveRecord::Base
+  module Totaling
+    def total
+      map(&:amount).sum
+    end
+  end
 
-  before_create :generate_order_number, :set_state
+  before_create :generate_order_number
 
   belongs_to :supplier
-  has_many :purchase_line_items
+  has_many :state_events, :as => :stateful
+  has_many :purchase_line_items, :extend => Totaling, :dependent => :destroy
+  
   make_permalink :field => :number
   
   accepts_nested_attributes_for :purchase_line_items
+  
+  state_machine :initial => 'in_progress' do
+    event :send_out do
+      transition :to => 'sent', :from  => 'in_progress'
+    end
+    event :receive do
+      transition :to => 'received', :from  => 'sent'
+    end
+  end
 
   def contains?(product)
     purchase_line_items.select { |purchase_line_item| purchase_line_item.product == product }.first
@@ -41,12 +57,9 @@ class PurchaseOrder < ActiveRecord::Base
     current_item
   end
   
-  def set_total
-    self.total = purchase_line_items.collect {|x| x.cost * x.qty}.sum || 0
-  end
-
-  def set_state
-    self.state = 'in_progress'
+  def update_totals
+    self.purchase_line_items.map(&:save)
+    self.total  = self.purchase_line_items.total
   end
    
   def to_param

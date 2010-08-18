@@ -17,9 +17,9 @@
 	<% @collection.each do |purchase_order| -%>
       <tr id="<%= dom_id(purchase_order) %>" >
       	<td><%= link_to purchase_order.number, object_url(purchase_order) %></td>
-      	<td><%= purchase_order.supplier.name rescue '-'  -%></td>
+      	<td><%= purchase_order.supplier.name if purchase_order.supplier -%></td>
       	<td><%= purchase_order.state  -%></td>
-      	<td><%= "$%.2f" % purchase_order.total -%></td>
+      	<td><%= "$%.2f" % purchase_order.total if purchase_order.total -%></td>
         <td><%= link_to_edit(purchase_order) %> <%= link_to_delete(purchase_order) %></td>
       </tr>
   <% end -%>

@@ -4,22 +4,16 @@
   <div id="order_tab_summary">
     <h3 id="order_number"><%= t(:purchase_order) + " ##{@purchase_order.number} " %></h3>
     <h5 id="order_status">Status: <%= t(@purchase_order.state) %></h5>
-    <h5 id="order_total">Total: <%= number_to_currency(@purchase_order.set_total) %></h5>
+    <h5 id="order_total">Total: <%= number_to_currency(@purchase_order.total) %></h5>
     <br class="clear" />
   </div>
   <br class="clear" />
 
-  <ul class="sidebar">
+<ul class="sidebar">
 
-      <% if @purchase_order.state == "in_progress" %>
-        Add links here for shipping/receiving
-      <% else %>
-        Add links here for shipping/receiving
-      <% end %>
-
-
-
-
-  </ul>
+  <li <%= ' class="active"' if current == "Purchase Order Details" %>>
+    <%= link_to t("purchase_order_details"), edit_admin_purchase_order_url(@purchase_order) %>
+  </li>
+</ul>
 
 <% end %>

@@ -1,3 +1,4 @@
+<%= render :partial => 'admin/shared/purchase_order_sub_menu' %>
 <%= render :partial => 'admin/shared/purchase_order_tabs', :locals => {:current => "Purchase Order Details"} %>
 
 <div class="adr">
@@ -9,16 +10,24 @@
 
 <div style="clear:both;"></div>
 
-<%= render :partial => "add_product" %>
+<%= render :partial => "add_product" unless @purchase_order.state == "sent" %>
 
-<% hook :admin_order_edit_header do %>
-  <%=error_messages_for :order %>
+<% hook :admin_purchase_order_edit_header do %>
+  <%=error_messages_for :purchase_order %>
 <% end %>
 
-<% hook :admin_order_edit_form do %>
-  <div id="order-form-wrapper">
+<% hook :admin_purchase_order_edit_form do %>
+  <div id="purchase_order-form-wrapper">
     <%= render :partial => 'form', :locals => {:purchase_order => @purchase_order} -%>
   </div>
+<% end %>
+
+<% hook :admin_purchase_order_form_buttons do %>
+  <p class="form-buttons">
+    <button type="submit"><span><%= t('update') %></span></button>
+    <button type="submit" name="submit" value="receive"><span><%= t('receive') %></span></button>
+    <%= t("or") %> <%= link_to t("actions.cancel"), admin_purchase_orders_url %>
+  </p>
 <% end %>
 
 <% content_for :head do %>

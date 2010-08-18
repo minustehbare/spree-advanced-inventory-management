@@ -14,9 +14,9 @@
         <%- locals = {:item => item} -%>
         <% hook :order_details_line_item_row, locals do %>
           <td width="300"><%=item.variant.product.name-%> <%= "(" + variant_options(item.variant) + ")" unless item.variant .option_values.empty? %></td>
-          <td class="price"><%= number_to_currency item.price -%></td>
-          <td class="qty"><%=item.quantity-%></td>
-          <td class="total"><span><%= number_to_currency (item.price * item.quantity)-%></span></td>
+          <td class="price"><%= number_to_currency item.cost -%></td>
+          <td class="qty"><%=item.qty-%></td>
+          <td class="total"><span><%= number_to_currency (item.cost * item.qty)-%></span></td>
         <% end %>
       </tr>
     <% end %>
@@ -34,7 +34,7 @@
     <tbody id='order-total'>
       <tr class="total">
         <td colspan="3"><b><%= t('order_total') %>:</b></td>
-        <td class="total"><span id="order_total"><%= number_to_currency @purchase_order.set_total -%></span></td>
+        <td class="total"><span id="order_total"><%= number_to_currency @purchase_order.total -%></span></td>
       </tr>
     </tbody>
   <% end %>
