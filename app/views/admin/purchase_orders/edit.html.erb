@@ -22,14 +22,6 @@
   </div>
 <% end %>
 
-<% hook :admin_purchase_order_form_buttons do %>
-  <p class="form-buttons">
-    <button type="submit"><span><%= t('update') %></span></button>
-    <button type="submit" name="submit" value="receive"><span><%= t('receive') %></span></button>
-    <%= t("or") %> <%= link_to t("actions.cancel"), admin_purchase_orders_url %>
-  </p>
-<% end %>
-
 <% content_for :head do %>
   <%= javascript_tag "var expand_variants = true; var supplier_id = " + @purchase_order.supplier_id.to_s -%>
   <%= javascript_include_tag 'admin/purchase_orders/edit.js' -%>

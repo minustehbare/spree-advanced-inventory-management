@@ -11,11 +11,11 @@ class Admin::PurchaseLineItemsController < Admin::BaseController
   #override r_c create action as we want to use order#add_variant instead of creating line_item
   def create
     load_object
-    variant = Variant.find(params[:line_item][:variant_id])
+    variant = Variant.find(params[:purchase_line_item][:variant_id])
 
     before :create
 
-    @purchase_order.add_variant(variant, params[:line_item][:qty].to_i)
+    @purchase_order.add_variant(variant, params[:purchase_line_item][:qty].to_i)
 
     if @purchase_order.save
       after :create

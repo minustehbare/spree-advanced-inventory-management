@@ -14,10 +14,10 @@
       <%= button_link_to_remote t("add"),
                          {:url => admin_purchase_order_purchase_line_items_url(@purchase_order),
                          :method => :post,
-                         :with => "'line_item[variant_id]=' + $('#add_variant_id').val() + '&line_item[qty]=' + $('#add_qty').val()",
+                         :with => "'purchase_line_item[variant_id]=' + $('#add_variant_id').val() + '&purchase_line_item[qty]=' + $('#add_qty').val()",
                          :before => "if($('#add_variant_id').val()==''){ return false; }",
                          :after => "$('#add_product_name').val('');$('#add_variant_id').val('');$('#add_qty').val(1)",
-                         :update => "order-form-wrapper"}, :icon => 'add' %>
+                         :update => "purchase_order-form-wrapper"}, :icon => 'add' %>
     </div>
 
   </fieldset>

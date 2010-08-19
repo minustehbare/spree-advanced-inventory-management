@@ -44,7 +44,7 @@ class Admin::PurchaseOrdersController < Admin::BaseController
   end
 
   def recalulate_totals
-    @purchase_order.set_total
+    @purchase_order.update_totals
   end
   
   #def check_state
