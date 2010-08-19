@@ -16,3 +16,5 @@ en:
   listing_porders: "Listing Purchase Orders"
   purchase_order_details: "Purchase Order Details"
   receive: "Receive Items"
+  sent: "Sent"
+  send_out: "Send Purchase Order"

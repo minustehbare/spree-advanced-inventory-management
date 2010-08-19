@@ -16,12 +16,18 @@ class PurchaseOrder < ActiveRecord::Base
   accepts_nested_attributes_for :purchase_line_items
   
   state_machine :initial => 'in_progress' do
+    after_transition any => :sent, :do => :send_purchase_order
+ 
     event :send_out do
       transition :to => 'sent', :from  => 'in_progress'
     end
     event :receive do
       transition :to => 'received', :from  => 'sent'
     end
+  end
+  
+  def send_purchase_order
+    logger.info("TODO: Send out the purchase order")
   end
 
   def contains?(product)

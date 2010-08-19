@@ -28,6 +28,7 @@ class Admin::PurchaseOrdersController < Admin::BaseController
 
   def collection
     @search = PurchaseOrder.searchlogic(params[:search])
+    # The order of the search not Order
     @search.order ||= "descend_by_created_at"
 
     @collection = @search.paginate(:include  => [:supplier, :purchase_line_items],
@@ -36,7 +37,11 @@ class Admin::PurchaseOrdersController < Admin::BaseController
   end
   
   def set_state
-    @purchase_order.receive if params[:submit][:receive]
+    if params[:submit] == "receive"
+      @purchase_order.receive
+    elsif params[:submit] == "send_out"
+      @purchase_order.send_out
+    end
   end
   
   def object

@@ -70,7 +70,7 @@
       </div>
 
       <p><label><%= t("status") %></label><br />
-      <%= f.select :state_equals, Order.state_machines[:state].states.collect {|s| [t(s.name), s.value]}, {:include_blank => true} %></p>
+      <%= f.select :state_equals, PurchaseOrder.state_machines[:state].states.collect {|s| [t(s.name), s.value]}, {:include_blank => true} %></p>
 
       <p>
         <label><%= t 'supplier' %></label><br />
