@@ -4,9 +4,9 @@ class Admin::PurchaseOrdersController < Admin::BaseController
   before_filter :load_data, :only => [:new, :edit, :create, :update]
   #before_filter :check_state, :only => [:edit]
   
-  def new
-    @purchase_order = PurchaseOrder.create
-  end
+#  def new
+#    @purchase_order = PurchaseOrder.create
+#  end
 
   edit.after do
     flash[:error] = "Cannot re-assign Supplier. Delete purchase order and start over."
@@ -16,7 +16,6 @@ class Admin::PurchaseOrdersController < Admin::BaseController
     wants.html { redirect_to '/admin/purchase_orders/' + @purchase_order.number + '/edit' }
   end
   
-  destroy.after :recalulate_totals
   update.after :recalulate_totals, :set_state
   create.after :recalulate_totals
   
@@ -37,11 +36,7 @@ class Admin::PurchaseOrdersController < Admin::BaseController
   end
   
   def set_state
-    if params[:submit] == "receive"
-      @purchase_order.receive
-    elsif params[:submit] == "send_out"
-      @purchase_order.send_out
-    end
+    @purchase_order.send(params[:submit]) if params[:submit]
   end
   
   def object

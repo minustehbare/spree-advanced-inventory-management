@@ -16,7 +16,7 @@ class PurchaseOrder < ActiveRecord::Base
   accepts_nested_attributes_for :purchase_line_items
   
   state_machine :initial => 'in_progress' do
-    after_transition any => :sent, :do => :send_purchase_order
+    after_transition :to => 'sent', :do => :send_purchase_order
  
     event :send_out do
       transition :to => 'sent', :from  => 'in_progress'

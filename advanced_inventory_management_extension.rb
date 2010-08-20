@@ -12,7 +12,7 @@ class AdvancedInventoryManagementExtension < Spree::Extension
       def products_by_supplier
 
         includes = [{:variants => :images}, :master, :images]
-        @collection = Product.name_contains(params[:q]).master_supplier_channels_supplier_id_eq(params[:supplier_id]).all(:include => includes, :limit => 10)
+        @collection = Product.name_contains(params[:q]).supplier_channels_supplier_id_eq(params[:supplier_id]).all(:include => includes, :limit => 10)
                 
         respond_to do |wants|
           wants.json {
@@ -27,6 +27,18 @@ class AdvancedInventoryManagementExtension < Spree::Extension
       has_many :supplier_channels  
       
     end
+    
+    Product.class_eval do
+      has_many :supplier_channels
+      has_many :suppliers, :through => :supplier_channels
+      
+      has_one :default_supplier_channel, :class_name => "SupplierChannel", :conditions => "supplier_channels.is_default = 1"
+      
+      def cost_price 
+        default_supplier_channel.cost if default_supplier_channel
+      end
+    end
+
  
   end
 end

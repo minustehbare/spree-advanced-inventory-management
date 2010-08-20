@@ -18,3 +18,7 @@ en:
   receive: "Receive Items"
   sent: "Sent"
   send_out: "Send Purchase Order"
+  supplier_channels: "Suppliers"
+  supplier_channel: "Supplier Channel"
+  supplier_sku: "Supplier SKU"
+  set_default: "Make Default"
