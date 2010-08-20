@@ -2,11 +2,6 @@ class Admin::PurchaseOrdersController < Admin::BaseController
   resource_controller
     
   before_filter :load_data, :only => [:new, :edit, :create, :update]
-  #before_filter :check_state, :only => [:edit]
-  
-#  def new
-#    @purchase_order = PurchaseOrder.create
-#  end
 
   edit.after do
     flash[:error] = "Cannot re-assign Supplier. Delete purchase order and start over."
@@ -47,11 +42,4 @@ class Admin::PurchaseOrdersController < Admin::BaseController
     @purchase_order.update_totals
   end
   
-  #def check_state
-  #  @purchase_order = PurchaseOrder.find_by_param(params[:id])
-  #  if @purchase_order.state == "done"
-  #    flash[:error] = "Cannot modify a closed purchase order, your argument is invalid, bitches."
-  #    redirect_to '/admin/purchase_orders/' + @purchase_order.number
-  #  end
-  #end
 end
