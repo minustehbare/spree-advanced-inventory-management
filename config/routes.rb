@@ -8,6 +8,7 @@ map.namespace :admin do |admin|
 
   admin.resources :products do |product|
     product.resources :supplier_channels, :member => {:set_default => :get}
+    product.resources :product_locations
   end
 
 end

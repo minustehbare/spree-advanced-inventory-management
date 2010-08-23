@@ -29,6 +29,12 @@ class AdvancedInventoryManagementExtension < Spree::Extension
     end
     
     Product.class_eval do
+    
+      has_many :product_locations, :dependent => :destroy
+      
+    end
+    
+    Product.class_eval do
       has_many :supplier_channels
       has_many :suppliers, :through => :supplier_channels
       
