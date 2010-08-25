@@ -1,6 +1,5 @@
 class Admin::SupplierChannelsController < Admin::BaseController
   resource_controller
-  
   belongs_to :product
   
   before_filter :load_data, :only => [:new, :edit, :create, :update]

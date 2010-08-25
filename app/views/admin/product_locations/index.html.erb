@@ -1,0 +1,16 @@
+<%= render :partial => 'admin/shared/product_sub_menu' %>
+
+<%= render :partial => 'admin/shared/product_tabs', :locals => {:current => "Inventory"} %>
+<div id="selected-product_locations">
+  <%= render :partial => "product_location_table" %>
+</div>
+
+<% form_tag('#') do %>
+  <label><%= t('search') %>:</label>
+  <input id="searchtext" size="25">
+<% end %>
+
+
+<br/>
+<div id="search_hits"></div>
+
