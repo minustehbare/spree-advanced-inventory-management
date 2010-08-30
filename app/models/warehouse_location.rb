@@ -16,4 +16,5 @@ class WarehouseLocation < ActiveRecord::Base
     
     location_names.join(joiner)
   end
+
 end

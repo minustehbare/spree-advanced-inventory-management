@@ -5,6 +5,7 @@ map.namespace :admin do |admin|
   admin.resources :suppliers
   
   admin.resources :products, :collection => {:products_by_supplier => :get}
+  admin.resources :warehouse_locations, :collection => {:find_sub_locations => :get}
 
   admin.resources :products do |product|
     product.resources :supplier_channels, :member => {:set_default => :get}

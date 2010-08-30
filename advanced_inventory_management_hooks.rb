@@ -19,6 +19,10 @@ class AdvancedInventoryManagementHooks < Spree::ThemeSupport::HookListener
       </li>
     <% end %>'
   end
+  
+  insert_after(:admin_inside_head) do
+    '<link href="/stylesheets/admin/inventory-styles.css" media="screen" rel="stylesheet" type="text/css" /> '
+  end
 
   insert_after :admin_product_form_right , "admin/products/supplier_fields"
 

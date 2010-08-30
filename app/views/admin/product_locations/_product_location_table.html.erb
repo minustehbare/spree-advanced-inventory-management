@@ -13,12 +13,6 @@
         <td><%= product_location.count || 0 -%></td>
   	    <td class="actions">
           <%= image_tag "spinner.gif", :style => "display:none", :id => "#{dom_id(product_location, :rem_spinner)}" %>
-          <!-- %= link_to_remote t("add"),
-                         {:url => new_admin_product_product_location_url(),
-                         :method => :post,
-                         :loading => "jQuery('##{dom_id(product_location, :rem_spinner)}').show()",
-		                     :update => 'selected-product_locations',
-                         :update => "purchase_order-form-wrapper"}, :icon => 'add' % -->
                                                
 		      <%= link_to_remote icon('delete') + ' ' + t('remove'), 
 		                         {:url => remove_admin_product_product_location_url(@product, product_location),
