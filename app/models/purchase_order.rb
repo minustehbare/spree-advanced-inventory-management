@@ -34,30 +34,17 @@ class PurchaseOrder < ActiveRecord::Base
     purchase_line_items.select { |purchase_line_item| purchase_line_item.product == product }.first
   end
 
-  def add_variant(variant, quantity=1)
-    current_item = contains?(variant)
+  def add_product(product, quantity=1)
+    current_item = contains?(product)
     if current_item
       current_item.increment_quantity unless quantity > 1
       current_item.quantity = (current_item.quantity + quantity) if quantity > 1
       current_item.save
     else
       current_item = PurchaseLineItem.new(:qty => quantity)
-      current_item.variant = variant
-      current_item.cost   = variant.price
+      current_item.product = product
+      current_item.cost   = product.price
       self.purchase_line_items << current_item
-    end
-
-    # populate line_items attributes for additional_fields entries
-    # that have populate => [:line_item]
-    Variant.additional_fields.select{|f| !f[:populate].nil? && f[:populate].include?(:line_item) }.each do |field|
-      value = ""
-
-      if field[:only].nil? || field[:only].include?(:variant)
-        value = variant.send(field[:name].gsub(" ", "_").downcase)
-      elsif field[:only].include?(:product)
-        value = variant.product.send(field[:name].gsub(" ", "_").downcase)
-      end
-      current_item.update_attribute(field[:name].gsub(" ", "_").downcase, value)
     end
 
     current_item
@@ -81,6 +68,25 @@ class PurchaseOrder < ActiveRecord::Base
       record = PurchaseOrder.find(:first, :conditions => ["number = ?", random])
     end
     self.number = random
+  end
+  
+  def self.check_if_reorder_needed(products)
+    products.each do |p| determine_reorder_method(p) if p.reorder_automatically
+    end
+  end
+  
+  def self.determine_reorder_method(product)
+    qty = if product.reorder_method == 'fixed' 
+      product.minimum_reorder_size
+    elsif product.reorder_method == 'delta'
+      product.minimum_on_hand - product.count_on_hand
+    end
+    order_more_of(product, qty)
+  end
+  
+  def self.order_more_of(product, qty)
+    purchase_order = PurchaseOrder.find_or_create_by_supplier_and_status(product.default_supplier, 'in_progress')
+    purchase_order.add_product(product, qty)
   end
 
 end
