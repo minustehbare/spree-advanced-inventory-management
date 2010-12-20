@@ -1,7 +1,7 @@
 Advanced Inventory Management
 =============================
 
-An extensions maintained by Denis 'jumph4x' and Sonny 'tparlin' in an effort to bring Spree up to speed on inventory management for our employer. 
+An extension maintained by Denis 'jumph4x' and Tom 'minustehbare' in an effort to bring Spree up to speed on inventory management for our employer. 
 
 WARNING
 =======
